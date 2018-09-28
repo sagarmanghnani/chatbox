@@ -1,18 +1,61 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Chatkit from '@pusher/chatkit';
+import {tokenUrl, instanceLocator} from './configchat';
+import { ChatManager, TokenProvider } from '@pusher/chatkit'
+
 
 class App extends Component {
+
+  constructor()
+  {
+    super()
+    this.state = {
+      messages:[],
+      check:Number
+    }
+    this.connectChatKit = this.connectChatKit.bind(this);
+
+  }
+  componentDidMount()
+  {
+      this.connectChatKit()
+  }
+
+  connectChatKit()
+  {
+    const chatManager = new Chatkit.ChatManager({
+      instanceLocator,
+      userId: 'sagarmanghnani',
+      tokenProvider: new Chatkit.TokenProvider({
+          url: tokenUrl
+      })
+  })
+  
+  chatManager.connect()
+  .then(currentUser => {
+      currentUser.subscribeToRoom({
+          roomId: 17309268,
+          hooks: {
+              onNewMessage: message => {
+                  console.log('message.text: ', message);
+                  this.setState({
+                    //messages: [...this.state.messages, message.text]
+                    messages: this.state.messages.push(4)
+                    
+                  });
+                  console.log( "type of messages "+ (this.state.messages));
+              }
+          }
+      })
+  })
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        
       </div>
     );
   }
