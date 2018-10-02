@@ -3,7 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 import Chatkit from '@pusher/chatkit';
 import {tokenUrl, instanceLocator} from './configchat';
-import { ChatManager, TokenProvider } from '@pusher/chatkit'
+import { ChatManager, TokenProvider } from '@pusher/chatkit';
+import Messagepage from './components/Message';
+import Getmessage from './components/Getmessage';
 
 
 class App extends Component {
@@ -16,7 +18,7 @@ class App extends Component {
       check:Number
     }
     this.connectChatKit = this.connectChatKit.bind(this);
-
+    this.sendMessage = this.sendMessage.bind(this);
   }
   componentDidMount()
   {
@@ -33,29 +35,42 @@ class App extends Component {
       })
   })
   
+  
   chatManager.connect()
   .then(currentUser => {
-      currentUser.subscribeToRoom({
+      //setting up currentUser as property is not working
+      this.hangover = currentUser;
+      this.hangover.subscribeToRoom({
           roomId: 17309268,
           hooks: {
               onNewMessage: message => {
                   console.log('message.text: ', message);
                   this.setState({
-                    //messages: [...this.state.messages, message.text]
-                    messages: this.state.messages.push(4)
-                    
+                    messages: [...this.state.messages, message],
                   });
-                  console.log( "type of messages "+ (this.state.messages));
               }
           }
       })
   })
   }
 
+  sendMessage(text)
+  {
+    
+    console.log(this.hangover);
+    this.hangover.sendMessage({
+      text,
+      roomId:17309268
+    });
+  }
+
+
   render() {
     return (
       <div className="App">
-        
+        <div>{this.currentUser}</div>
+        <Messagepage messaging = {this.state.messages}/>
+        <Getmessage submitMessage = {this.sendMessage}/>
       </div>
     );
   }
