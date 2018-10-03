@@ -31,5 +31,5 @@ export class Getmessage extends Component {
     )
   }
 }
-
+//why onclick requires arrow function, without it, it is not functioning properly
 export default Getmessage

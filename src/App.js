@@ -6,6 +6,7 @@ import {tokenUrl, instanceLocator} from './configchat';
 import { ChatManager, TokenProvider } from '@pusher/chatkit';
 import Messagepage from './components/Message';
 import Getmessage from './components/Getmessage';
+import { Roomlist } from './components/Roomlist';
 
 
 class App extends Component {
@@ -15,10 +16,14 @@ class App extends Component {
     super()
     this.state = {
       messages:[],
-      check:Number
+      joinableRooms:[],
+      joinedRooms:[],
+      roomId:null
+
     }
     this.connectChatKit = this.connectChatKit.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.roomSubscription = this.roomSubscription.bind(this);
   }
   componentDidMount()
   {
@@ -40,18 +45,36 @@ class App extends Component {
   .then(currentUser => {
       //setting up currentUser as property is not working
       this.hangover = currentUser;
-      this.hangover.subscribeToRoom({
-          roomId: 17309268,
-          hooks: {
-              onNewMessage: message => {
-                  console.log('message.text: ', message);
-                  this.setState({
-                    messages: [...this.state.messages, message],
-                  });
-              }
-          }
+      this.hangover.getJoinableRooms().then(roomss => {
+        console.log(roomss);
+        console.log(this.hangover.rooms);
+        this.setState({
+          joinableRooms:[...this.state.joinableRooms, roomss],
+          joinedRooms:this.hangover.rooms
+        })
       })
+      //this.roomSubscription();
   })
+  }
+
+  roomSubscription(roomsID)
+  {
+    this.setState({messages:[]})
+    this.hangover.subscribeToRoom({
+      roomId: roomsID,
+      hooks: {
+          onNewMessage: message => {
+              console.log('message.text: ', message);
+              this.setState({
+                messages: [...this.state.messages, message],
+              });
+          }
+      }
+    }).then(room => {
+      this.setState({
+        roomId:room.id
+      })
+    })
   }
 
   sendMessage(text)
@@ -60,7 +83,7 @@ class App extends Component {
     console.log(this.hangover);
     this.hangover.sendMessage({
       text,
-      roomId:17309268
+      roomId:this.state.roomId
     });
   }
 
@@ -69,6 +92,7 @@ class App extends Component {
     return (
       <div className="App">
         <div>{this.currentUser}</div>
+        <Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription}/>
         <Messagepage messaging = {this.state.messages}/>
         <Getmessage submitMessage = {this.sendMessage}/>
       </div>
