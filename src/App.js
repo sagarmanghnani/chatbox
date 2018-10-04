@@ -26,6 +26,7 @@ class App extends Component {
     this.sendMessage = this.sendMessage.bind(this);
     this.roomSubscription = this.roomSubscription.bind(this);
     this.newRoom = this.newRoom.bind(this);
+    this.getRooms = this.getRooms.bind(this);
   }
   componentDidMount()
   {
@@ -47,21 +48,25 @@ class App extends Component {
   .then(currentUser => {
       //setting up currentUser as property is not working
       this.hangover = currentUser;
-      this.hangover.getJoinableRooms().then(roomss => {
-        console.log(roomss);
-        console.log(this.hangover.rooms);
-        this.setState({
-          joinableRooms:[...this.state.joinableRooms, roomss],
-          joinedRooms:this.hangover.rooms
-        })
-      })
+      this.getRooms();
       //this.roomSubscription();
   })
   }
 
+  getRooms()
+  {
+    this.hangover.getJoinableRooms().then(roomss => {
+      console.log( "rooms to be joined"+ roomss);
+      console.log(this.hangover.rooms);
+      this.setState({
+        joinableRooms:[...this.state.joinableRooms, roomss],
+        joinedRooms:this.hangover.rooms
+      })
+    })
+  }
+
   roomSubscription(roomsID)
   {
-
     this.setState({messages:[]})
     this.hangover.subscribeToRoom({
       roomId: roomsID,
@@ -70,13 +75,12 @@ class App extends Component {
               console.log('message.text: ', message);
               this.setState({
                 messages: [...this.state.messages, message],
+                roomId:roomsID
               });
           }
       }
-    }).then(room => {
-      this.setState({
-        roomId:room.id
-      })
+    }).then(() => {
+      this.getRooms();
     })
   }
 
@@ -106,7 +110,7 @@ class App extends Component {
       <div className="App">
         <div>{this.currentUser}</div>
         <Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription}/>
-        <Messagepage messaging = {this.state.messages}/>
+        <Messagepage messaging = {this.state.messages} joinRoom={this.state.roomId}/>
         <Getmessage submitMessage = {this.sendMessage} disableds={!this.state.roomId}/>
         <Newroom getNewRoom = {this.newRoom}/>
       </div>

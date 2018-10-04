@@ -20,7 +20,12 @@ export class Messagepage extends Component {
     }
   }
   render() {
-    
+    if(!this.props.joinRoom)
+    {
+      return(
+        <div>Enter Room first</div>
+      )
+    }
     return (
       <div>
          {this.props.messaging.map((message, index) => {
