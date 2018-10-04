@@ -7,6 +7,7 @@ import { ChatManager, TokenProvider } from '@pusher/chatkit';
 import Messagepage from './components/Message';
 import Getmessage from './components/Getmessage';
 import { Roomlist } from './components/Roomlist';
+import Newroom from './components/Newroom';
 
 
 class App extends Component {
@@ -18,12 +19,13 @@ class App extends Component {
       messages:[],
       joinableRooms:[],
       joinedRooms:[],
-      roomId:null
-
+      roomId:null,
+      isRoomEntered:false,
     }
     this.connectChatKit = this.connectChatKit.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.roomSubscription = this.roomSubscription.bind(this);
+    this.newRoom = this.newRoom.bind(this);
   }
   componentDidMount()
   {
@@ -59,6 +61,7 @@ class App extends Component {
 
   roomSubscription(roomsID)
   {
+
     this.setState({messages:[]})
     this.hangover.subscribeToRoom({
       roomId: roomsID,
@@ -87,6 +90,16 @@ class App extends Component {
     });
   }
 
+  newRoom(roomName)
+  {
+    console.log("new Room");
+    this.hangover.createRoom({
+      name:roomName
+    }).then(room => {
+      this.roomSubscription(room.id);
+    })
+    .catch(err => {console.log(err)})
+  }
 
   render() {
     return (
@@ -94,7 +107,8 @@ class App extends Component {
         <div>{this.currentUser}</div>
         <Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription}/>
         <Messagepage messaging = {this.state.messages}/>
-        <Getmessage submitMessage = {this.sendMessage}/>
+        <Getmessage submitMessage = {this.sendMessage} disableds={!this.state.roomId}/>
+        <Newroom getNewRoom = {this.newRoom}/>
       </div>
     );
   }

@@ -6,7 +6,7 @@ export class Getmessage extends Component {
   {
       super()
       this.state = {
-          formMessage:''
+          formMessage:'',
       }
       this.handleChange = this.handleChange.bind(this);
   }
@@ -18,13 +18,14 @@ export class Getmessage extends Component {
         formMessage: e.target.value
     });
   }
+
   
     render() {
 
     return (
       <div>
-        <form>
-            <input type = "text" placeholder = "Enter message here" onChange = {this.handleChange} value = {this.state.formMessage}/>
+        <form onSubmit = {() => {this.props.submitMessage(this.state.formMessage)}}>
+            <input type = "text" placeholder = "Enter message here" onChange = {this.handleChange} value = {this.state.formMessage} disabled={this.props.disableds}/>
         </form>
         <button onClick = {() => this.props.submitMessage(this.state.formMessage)}>click</button>
       </div>
