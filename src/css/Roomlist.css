@@ -27,3 +27,8 @@
 a{
     color: var(--secondary-text-color) !important;
 }
+
+.active{
+    color: white !important;
+    font-weight: bold;
+}

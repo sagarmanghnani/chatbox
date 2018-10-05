@@ -117,7 +117,7 @@ class App extends Component {
       <div className="App">
         <div className="container-fluid">
           <div className = "row">
-            <div className = "col-lg-3 col-md-4" className = "setRoomList"><Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription}/></div>
+            <div className = "col-lg-3 col-md-4" className = "setRoomList"><Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription} roomid = {this.state.roomId}/></div>
             <div className = "col-lg-9 col-md-8"><Messagepage messaging = {this.state.messages} joinRoom={this.state.roomId}/></div>
           </div>
           <div className = "row">

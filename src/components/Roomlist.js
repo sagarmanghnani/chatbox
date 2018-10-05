@@ -11,9 +11,17 @@ export class Roomlist extends Component {
       <div className = "roomsize-config">
         <h3 className = "room-heading">Your Rooms</h3>
         {orderedList.map(rooms => {
-           
+           if(this.props.roomid == rooms.id)
+           {
+             this.active = 'active';
+           }
+           else
+           {
+             this.active = '';
+           }
            return(
-               <div onClick = {() => {this.props.subscribeRoom(rooms.id)}} className = "roomlist"><a href="#"># {rooms.name}</a></div>
+
+               <div onClick = {() => {this.props.subscribeRoom(rooms.id)}} className = "roomlist"><a href="#" className = {this.active}># {rooms.name}</a></div>
            )
         })}
       </div>
