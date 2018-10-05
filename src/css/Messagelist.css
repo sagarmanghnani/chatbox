@@ -1,0 +1,19 @@
+@import url('../App.css');
+
+.message-text{
+    color: var(--secondary-color);
+    background-color: var(--secondary-text-color);
+    width: max-content;
+    padding:2%;
+    border-radius: 8%;
+    margin-left: 1%;
+    margin-top: 1%;
+}
+
+.message-username{
+    color: var(--main-text-color);
+    display: flex;
+    margin-left: 1%;
+    font-size: .9em;
+    margin-top: 2%;
+}

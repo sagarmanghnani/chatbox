@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import '../css/Newroom.css'
 export class Newroom extends Component {
 
   constructor()
@@ -29,11 +29,13 @@ export class Newroom extends Component {
   }
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-            <input type = "text" placeholder = "Create New Room" onChange = {this.handleChange} value = {this.state.roomName}/>
-            <button type = "submit">+</button>
-        </form>
+      <div className = "row">
+        <div className = "col-lg-9 col-md-9 col-sm-9">
+          <form onSubmit={this.handleSubmit}>
+              <input type = "text" placeholder = "Create New Room" onChange = {this.handleChange} value = {this.state.roomName}/>
+          </form>
+        </div>
+        <div className = "col-lg-3 col-md-3 col-sm-3"><button type = "submit" className = "newroom-button">+</button></div>
         
       </div>
     )

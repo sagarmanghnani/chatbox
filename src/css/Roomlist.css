@@ -1,0 +1,29 @@
+@import url('../App.css');
+
+.roomsize-config{
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    max-height: 90vh;
+    height: auto !important;
+    text-align: left;
+    background: var(--main-color);
+}
+
+.room-heading{
+    text-align: left;
+    margin-top: 13%;
+    padding-left: 7%;
+    font-weight: bold;
+    color: white;
+}
+.roomlist{
+    margin-top: 3%;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-left: 7%
+}
+
+a{
+    color: var(--secondary-text-color) !important;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import '../css/Getmessage.css';
 export class Getmessage extends Component {
   
   constructor()
@@ -24,10 +24,18 @@ export class Getmessage extends Component {
 
     return (
       <div>
-        <form onSubmit = {() => {this.props.submitMessage(this.state.formMessage)}}>
-            <input type = "text" placeholder = "Enter message here" onChange = {this.handleChange} value = {this.state.formMessage} disabled={this.props.disableds}/>
-        </form>
-        <button onClick = {() => this.props.submitMessage(this.state.formMessage)}>click</button>
+        <div className = "row getmessage-config">
+          <div className = "col-lg-9 col-md-9">
+            <form onSubmit = {() => {this.props.submitMessage(this.state.formMessage)}}>
+                <input type = "text" placeholder = "Enter message here" onChange = {this.handleChange} value = {this.state.formMessage} disabled={this.props.disableds} className = "input-message"/>
+            </form>
+          </div>
+
+          <div className = "col-lg-3 col-md-3">
+            <button onClick = {() => this.props.submitMessage(this.state.formMessage)} className = "setButton">click</button>
+          </div>
+
+        </div>
       </div>
     )
   }

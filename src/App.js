@@ -8,6 +8,8 @@ import Messagepage from './components/Message';
 import Getmessage from './components/Getmessage';
 import { Roomlist } from './components/Roomlist';
 import Newroom from './components/Newroom';
+import { Grid, Row, Col } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 class App extends Component {
@@ -59,7 +61,7 @@ class App extends Component {
       console.log( "rooms to be joined"+ roomss);
       console.log(this.hangover.rooms);
       this.setState({
-        joinableRooms:[...this.state.joinableRooms, roomss],
+        joinableRooms:roomss,
         joinedRooms:this.hangover.rooms
       })
     })
@@ -105,14 +107,20 @@ class App extends Component {
     .catch(err => {console.log(err)})
   }
 
+ 
   render() {
     return (
       <div className="App">
-        <div>{this.currentUser}</div>
-        <Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription}/>
-        <Messagepage messaging = {this.state.messages} joinRoom={this.state.roomId}/>
-        <Getmessage submitMessage = {this.sendMessage} disableds={!this.state.roomId}/>
-        <Newroom getNewRoom = {this.newRoom}/>
+        <div className="container-fluid">
+          <div className = "row">
+            <div className = "col-lg-3 col-md-4" className = "setRoomList"><Roomlist rooms = {[...this.state.joinableRooms, ...this.state.joinedRooms]} subscribeRoom = {this.roomSubscription}/></div>
+            <div className = "col-lg-9 col-md-8"><Messagepage messaging = {this.state.messages} joinRoom={this.state.roomId}/></div>
+          </div>
+          <div className = "row">
+            <div className = "col-lg-3 col-md-4"><Newroom getNewRoom = {this.newRoom}/></div>
+            <div className = "col-lg-9 col-md-8"><Getmessage submitMessage = {this.sendMessage} disableds={!this.state.roomId}/></div>
+          </div>
+        </div>
       </div>
     );
   }

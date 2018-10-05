@@ -1,0 +1,6 @@
+@import url('../css/Message.css');
+
+.message-config{
+    height: 90vh;
+    overflow-x: scroll;
+  }

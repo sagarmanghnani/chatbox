@@ -26,3 +26,17 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+:root{
+  --main-color: #5ea3d0;
+  --secondary-color:white;
+  --main-text-color: #3e5869;
+  --secondary-text-color: #b0c7d6;
+  --send-message-form: #F5F5F5;
+}
+
+.setRoomList{
+  padding-left: 0px;
+}
+
+
+

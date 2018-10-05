@@ -1,0 +1,20 @@
+@import url('../App.css');
+
+.getmessage-config{
+    height: 10vh;
+}
+input{
+    width: 100%;
+    text-align: left;
+    padding-left: 3%;
+}
+
+
+.setButton{
+    color: var(--send-message-form) !important;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-color) !important;
+    border: 0px;
+}
+

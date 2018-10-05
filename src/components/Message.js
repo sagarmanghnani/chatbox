@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Messagelist from './Messagelist';
 import ReactDom from 'react-dom';
+import '../css/Message.css';
 export class Messagepage extends Component {
 
 
@@ -23,11 +24,11 @@ export class Messagepage extends Component {
     if(!this.props.joinRoom)
     {
       return(
-        <div>Enter Room first</div>
+        <div className = "message-config">Enter Room first</div>
       )
     }
     return (
-      <div>
+      <div className = "message-config">
          {this.props.messaging.map((message, index) => {
            return(
              <Messagelist userName = {message.senderId} text = {message.text}/>
