@@ -77,13 +77,17 @@ class App extends Component {
               console.log('message.text: ', message);
               this.setState({
                 messages: [...this.state.messages, message],
-                roomId:roomsID
               });
           }
       }
-    }).then(() => {
-      this.getRooms();
     })
+    .then(room => {
+      this.setState({
+          roomId: room.id
+      })
+      this.getRooms()
+  })
+  .catch(err => console.log('error on subscribing to room: ', err))
   }
 
   sendMessage(text)
